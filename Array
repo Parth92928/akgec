@@ -1,0 +1,66 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+
+bool isPrime(int num) {
+    if (num <= 1) return false;
+    for (int i = 2; i * i <= num; ++i) {
+        if (num % i == 0) return false;
+    }
+    return true;
+}
+
+vector<int> rearrangePrimes(vector<int>& arr) {
+    vector<int> primes, nonPrimes;
+    
+    
+    for (int num : arr) {
+        if (isPrime(num)) {
+            primes.push_back(num);
+        } else {
+            nonPrimes.push_back(num);
+        }
+    }
+    
+   
+    sort(primes.begin(), primes.end(), greater<int>());
+
+    int largestPrime = primes.front();
+    int smallestPrime = primes.back();
+    
+   
+    vector<int> result;
+    result.push_back(largestPrime); 
+    primes.erase(primes.begin());  
+    
+    
+    for (int prime : primes) {
+        result.push_back(prime);
+    }
+    
+    result.push_back(smallestPrime); 
+    
+   
+    for (int num : nonPrimes) {
+        result.push_back(num);
+    }
+    
+    return result;
+}
+
+int main() {
+    vector<int> arr = {1,6, 4, 13, 9, 3};
+    
+    vector<int> result = rearrangePrimes(arr);
+    
+
+    for (int num : result) {
+        cout << num << " ";
+    }
+    
+    return 0;
+}
+
+
